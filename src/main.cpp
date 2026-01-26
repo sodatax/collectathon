@@ -36,8 +36,9 @@ static constexpr int SCORE_Y = -70;
 int main()
 {
     bn::core::init();
-
     bn::random rng = bn::random();
+
+    bn::backdrop::set_color(bn::color(31,0,0));
 
     // Will hold the sprites for the score
     bn::vector<bn::sprite_ptr, MAX_SCORE_CHARS> score_sprites = {};
