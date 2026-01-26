@@ -52,9 +52,6 @@ int main()
     bn::sprite_text_generator text_generator(common::fixed_8x16_sprite_font);
 
     int score = 0;
-    int Speed_boost = 3;   // AMOUNT OF BOOSTS
-    int BOOST = 0;         // INCREASE IN SPEED
-    int boost_counter = 0; // TIME BEFORE BOOST ENDS
 
     bn::sprite_ptr player = bn::sprite_items::square.create_sprite(PLAYER_X, PLAYER_Y);
 
@@ -65,29 +62,27 @@ int main()
         // Move player with d-pad
         if (bn::keypad::left_held())
         {
-            player.set_x(player.x() - SPEED - BOOST);
+            player.set_x(player.x() - SPEED);
         }
         if (bn::keypad::right_held())
         {
-            player.set_x(player.x() + SPEED + BOOST);
+            player.set_x(player.x() + SPEED);
         }
         if (bn::keypad::up_held())
         {
-            player.set_y(player.y() - SPEED - BOOST);
+            player.set_y(player.y() - SPEED);
         }
         if (bn::keypad::down_held())
         {
-            player.set_y(player.y() + SPEED + BOOST);
+            player.set_y(player.y() + SPEED);
         }
 
         // Places the player on the other side of the screen
-        if (player.x() == MIN_X || player.x() == MAX_X)
-        {
+        if(player.x() <= MIN_X || player.x() >= MAX_X){
             player.set_x(-player.x());
         }
 
-        if (player.y() <= MIN_Y || player.y() >= MAX_Y)
-        {
+        if(player.y() <= MIN_Y || player.y() >= MAX_Y){
             player.set_y(-player.y());
         }
 
@@ -104,21 +99,6 @@ int main()
             treasure.set_position(new_x, new_y);
         }
 
-        // BOOST
-        if (bn::keypad::a_pressed())
-        {
-            Speed_boost--;      // HOW MANY BOOST FOR GAME
-            boost_counter = 30; // HOW MANY FRAMES BEFORE BOOST ENDS
-            BOOST = 2;
-        }
-        if (boost_counter > 0)
-        {
-            boost_counter--;
-        }
-        else
-        {
-            BOOST = 0;
-        }
 
         // The bounding boxes of the player and treasure, snapped to integer pixels
         bn::rect player_rect = bn::rect(player.x().round_integer(),
