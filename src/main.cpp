@@ -39,7 +39,7 @@ int main()
     bn::core::init();
 
     // Backdrop color
-    bn::backdrop::set_color(bn::color(rgb(31, 0, 0)));
+    bn::backdrop::set_color(bn::color(31, 0, 0));
 
     bn::random rng = bn::random();
 
