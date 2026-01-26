@@ -38,6 +38,7 @@ static constexpr int MAX_SCORE_CHARS = 11;
 static constexpr int SCORE_X = 70;
 static constexpr int SCORE_Y = -70;
 
+
 int main()
 {
     bn::core::init();
@@ -50,6 +51,11 @@ int main()
     // Will hold the sprites for the score
     bn::vector<bn::sprite_ptr, MAX_SCORE_CHARS> score_sprites = {};
     bn::sprite_text_generator text_generator(common::fixed_8x16_sprite_font);
+
+    int score = 0;
+    int Speed_boost = 3;
+    int BOOST = 0;
+    int boost_counter = 0;
 
     int score = 0;
 
@@ -78,7 +84,8 @@ int main()
         }
 
         // Places the player on the other side of the screen
-        if(player.x() <= MIN_X || player.x() >= MAX_X){
+        if (player.x() <= MIN_X || player.x() >= MAX_X)
+        {
             player.set_x(-player.x());
         }
 
@@ -99,6 +106,21 @@ int main()
             treasure.set_position(new_x, new_y);
         }
 
+        // BOOST
+        if (bn::keypad::a_pressed() && Speed_boost > 0)
+        {
+            Speed_boost--;      // HOW MANY BOOST FOR GAME
+            boost_counter = 30; // HOW MANY FRAMES BEFORE BOOST ENDS
+            BOOST = 2;
+        }
+        if (boost_counter > 0)
+        {
+            boost_counter--;
+        }
+        else
+        {
+            BOOST = 0;
+        }
 
         // The bounding boxes of the player and treasure, snapped to integer pixels
         bn::rect player_rect = bn::rect(player.x().round_integer(),
