@@ -57,8 +57,6 @@ int main()
     int BOOST = 0;
     int boost_counter = 0;
 
-    int score = 0;
-
     bn::sprite_ptr player = bn::sprite_items::square.create_sprite(PLAYER_X, PLAYER_Y);
 
     bn::sprite_ptr treasure = bn::sprite_items::dot.create_sprite(0, 0);
@@ -68,19 +66,19 @@ int main()
         // Move player with d-pad
         if (bn::keypad::left_held())
         {
-            player.set_x(player.x() - SPEED);
+            player.set_x(player.x() - SPEED - BOOST);
         }
         if (bn::keypad::right_held())
         {
-            player.set_x(player.x() + SPEED);
+            player.set_x(player.x() + SPEED + BOOST);
         }
         if (bn::keypad::up_held())
         {
-            player.set_y(player.y() - SPEED);
+            player.set_y(player.y() - SPEED - BOOST);
         }
         if (bn::keypad::down_held())
         {
-            player.set_y(player.y() + SPEED);
+            player.set_y(player.y() + SPEED + BOOST);
         }
 
         // Places the player on the other side of the screen
