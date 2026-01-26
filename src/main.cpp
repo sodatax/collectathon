@@ -81,7 +81,7 @@ int main()
         }
 
         // Places the player on the other side of the screen
-        if (player.x() == MIN_X || player.x() == MAX_X)
+        if (player.x() <= MIN_X || player.x() >= MAX_X)
         {
             player.set_x(-player.x());
         }
