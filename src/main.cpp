@@ -25,7 +25,6 @@ static constexpr bn::size TREASURE_SIZE = {8, 8};
 static constexpr int PLAYER_X = 0;
 static constexpr int PLAYER_Y = 0;
 
-
 // Full bounds of the screen
 static constexpr int MIN_Y = -bn::display::height() / 2;
 static constexpr int MAX_Y = bn::display::height() / 2;
@@ -76,6 +75,19 @@ int main()
         if (bn::keypad::down_held())
         {
             player.set_y(player.y() + SPEED);
+        }
+
+        // Restart the game when pressed START
+        if (bn::keypad::start_pressed())
+        {
+            score = 0;
+            player.set_x(PLAYER_X);
+            player.set_y(PLAYER_Y);
+
+            // Jump to any random point in the screen
+            int new_x = rng.get_int(MIN_X, MAX_X);
+            int new_y = rng.get_int(MIN_Y, MAX_Y);
+            treasure.set_position(new_x, new_y);
         }
 
         // The bounding boxes of the player and treasure, snapped to integer pixels
