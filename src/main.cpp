@@ -15,7 +15,7 @@
 #include "common_fixed_8x16_font.h"
 
 // Pixels / Frame player moves at
-static constexpr bn::fixed SPEED = 1.5; 
+static constexpr bn::fixed SPEED = 1.5;
 
 // Width and height of the the player and treasure bounding boxes
 static constexpr bn::size PLAYER_SIZE = {8, 8};
@@ -39,11 +39,11 @@ int main()
     bn::core::init();
 
     // Backdrop color
-    bn::backdrop::set_color(bn::color(rgb(31, 0, 0)));
+    bn::backdrop::set_color(bn::color(31, 0, 0));
 
     bn::random rng = bn::random();
 
-    bn::backdrop::set_color(bn::color(31,0,0));
+    bn::backdrop::set_color(bn::color(31, 0, 0));
 
     // Will hold the sprites for the score
     bn::vector<bn::sprite_ptr, MAX_SCORE_CHARS> score_sprites = {};
