@@ -105,7 +105,7 @@ int main()
         }
 
         // BOOST
-        if (bn::keypad::a_pressed())
+        if (bn::keypad::a_pressed() && Speed_boost > 0)
         {
             Speed_boost--;      // HOW MANY BOOST FOR GAME
             boost_counter = 30; // HOW MANY FRAMES BEFORE BOOST ENDS
