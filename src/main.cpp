@@ -39,7 +39,6 @@ static constexpr int MAX_SCORE_CHARS = 11;
 static constexpr int SCORE_X = 70;
 static constexpr int SCORE_Y = -70;
 
-
 int main()
 {
     bn::core::init();
@@ -107,7 +106,7 @@ int main()
 
             //Resets boosts
             Speed_boost = 3;
-        }
+
 
         // Restart the game when pressed START
         if (bn::keypad::start_pressed())
