@@ -18,7 +18,7 @@
 
 // Pixels / Frame player moves at
 static constexpr bn::fixed SPEED = 2;
-static constexpr bn::fixed ENEMY_SPEED = 1;
+static constexpr bn::fixed ENEMY_SPEED = 0.5;
 
 // Width and height of the the player and treasure bounding boxes
 static constexpr bn::size PLAYER_SIZE = {8, 8};
