@@ -10,6 +10,8 @@
 #include <bn_string.h>
 #include <bn_backdrop.h>
 #include <bn_vector.h>
+#include <bn_sound_item.h>
+#include <bn_audio.h>
 
 #include "bn_sprite_items_dot.h"
 #include "bn_sprite_items_square.h"
@@ -106,7 +108,7 @@ int main()
 
             //Resets boosts
             Speed_boost = 3;
-
+        }
 
         // Restart the game when pressed START
         if (bn::keypad::start_pressed())
@@ -159,6 +161,7 @@ int main()
             int new_y = rng.get_int(MIN_Y, MAX_Y);
             treasure.set_position(new_x, new_y);
 
+            // bn::sound_item::alert.play();
             score++;
         }
 
