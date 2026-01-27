@@ -155,7 +155,7 @@ int main()
         {
             enemy.set_y(enemy.y() + ENEMY_SPEED);
         }
-        else
+        if (enemy.y() > player.y())
         {
             enemy.set_y(enemy.y() - ENEMY_SPEED);
         }
@@ -163,7 +163,7 @@ int main()
         {
             enemy.set_x(enemy.x() + ENEMY_SPEED);
         }
-        else
+        if (enemy.x() > player.x())
         {
             enemy.set_x(enemy.x() - ENEMY_SPEED);
         }
@@ -177,10 +177,13 @@ int main()
                                           treasure.y().round_integer(),
                                           TREASURE_SIZE.width(),
                                           TREASURE_SIZE.height());
-        bn::rect enemy_rect = bn::rect(enemy.y().round_integer(), enemy.y().round_integer(), ENEMY_SIZE.width(), ENEMY_SIZE.height());
+        bn::rect enemy_rect = bn::rect(enemy.x().round_integer(),
+                                       enemy.y().round_integer(),
+                                       ENEMY_SIZE.width(),
+                                       ENEMY_SIZE.height());
 
         // ENEMY
-        if (player_rect.intersects(enemy_rect))
+        if (enemy_rect.intersects(player_rect))
         {
             score = 0;
             player.set_x(PLAYER_X);
