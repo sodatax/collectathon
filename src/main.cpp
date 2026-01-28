@@ -12,6 +12,7 @@
 #include <bn_vector.h>
 #include <bn_music.h>
 #include <bn_music_items.h>
+#include "bn_sound_items.h"
 
 #include "bn_sprite_items_dot.h"
 #include "bn_sprite_items_square.h"
@@ -63,7 +64,7 @@ int main()
     int score = 0;
 
     // BOST VERIABLES
-    int Speed_boost = 3;   // AMOUNT OF BOOSTS
+    int speed_boost = 3;   // AMOUNT OF BOOSTS
     int BOOST = 0;         // INCREASE IN SPEED
     int boost_counter = 0; // TIME BEFORE BOOST ENDS
 
@@ -118,7 +119,7 @@ int main()
             treasure.set_position(new_x, new_y);
 
             // Resets boosts
-            Speed_boost = 3;
+            speed_boost = 3;
         }
         // Restart the game when pressed START
         if (bn::keypad::start_pressed())
@@ -133,13 +134,13 @@ int main()
             treasure.set_position(new_x, new_y);
 
             // resets boosts
-            Speed_boost = 3;
+            speed_boost = 3;
         }
 
         // BOOST
-        if (bn::keypad::a_pressed() && Speed_boost > 0)
+        if (bn::keypad::a_pressed() && speed_boost > 0)
         {
-            Speed_boost--;      // HOW MANY BOOST FOR GAME
+            speed_boost--;      // HOW MANY BOOST FOR GAME
             boost_counter = 30; // HOW MANY FRAMES BEFORE BOOST ENDS
             BOOST = 2;
         }
@@ -199,7 +200,7 @@ int main()
             treasure.set_position(new_x, new_y);
 
             // Resets boosts
-            Speed_boost = 3;
+            speed_boost = 3;
         }
 
         // If the bounding boxes overlap, set the treasure to a new location an increase score
@@ -211,7 +212,7 @@ int main()
             treasure.set_position(new_x, new_y);
 
             //plays a sound when overlaping with treasure
-            bn::music_items::alert.play();
+            bn::sound_items::alert.play();
             score++;
         }
 
