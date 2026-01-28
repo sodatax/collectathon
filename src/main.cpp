@@ -44,7 +44,7 @@ static constexpr int MAX_X = bn::display::width() / 2;
 static constexpr int MAX_SCORE_CHARS = 11;
 
 // Score location
-static constexpr int SCORE_X = 70;
+static constexpr int SCORE_X = 100;
 static constexpr int SCORE_Y = -70;
 
 int main()
@@ -79,12 +79,22 @@ int main()
     //checks if the game is paused
     bool paused = true;
 
+    //holds pause text in list
+    bn::vector<bn::sprite_ptr, 10> score_text_sprites;
+    bn::vector<bn::sprite_ptr, 20> paused_sprites;
+
+    //adds text to list
+    text_generator.generate(50, -70, "Score:", score_text_sprites);
+    text_generator.generate(-75, 40, "Press START to play!", paused_sprites);
+
     while (true)
     {
         //Pauses the game
         if(paused == true){
             SPEED = 0;
             ENEMY_SPEED = 0;
+            paused_sprites.clear();
+            text_generator.generate(-75, 40, "Press START to play!", paused_sprites);
         }
 
         // Move player with d-pad
@@ -121,7 +131,6 @@ int main()
             //plays death sound
             bn::sound_items::death.play();
 
-            score = 0;
             player.set_x(PLAYER_X);
             player.set_y(PLAYER_Y);
             enemy.set_x(ENEMY_X);
@@ -162,6 +171,9 @@ int main()
             //resets player speed
             SPEED = 2;
             ENEMY_SPEED = 0.75;
+
+            //clears start to play text
+            paused_sprites.clear();
 
             //unpauses game
             paused = false;
@@ -225,7 +237,6 @@ int main()
             //plays death sound if enemy intersects
             bn::sound_items::death.play();
 
-            score = 0;
             player.set_x(PLAYER_X);
             player.set_y(PLAYER_Y);
             enemy.set_x(ENEMY_X);
