@@ -21,7 +21,7 @@
 
 // Pixels / Frame player moves at
 static constexpr bn::fixed SPEED = 2;
-static constexpr bn::fixed ENEMY_SPEED = 0.5;
+static constexpr bn::fixed ENEMY_SPEED = 0.75;
 
 // Width and height of the the player and treasure bounding boxes
 static constexpr bn::size PLAYER_SIZE = {8, 8};
@@ -66,13 +66,16 @@ int main()
     // BOST VERIABLES
     int speed_boost = 3;   // AMOUNT OF BOOSTS
     int BOOST = 0;         // INCREASE IN SPEED
-    int boost_counter = 0; // TIME BEFORE BOOST ENDS
+    int boost_length = 0; // TIME BEFORE BOOST ENDS
 
     bn::sprite_ptr player = bn::sprite_items::square.create_sprite(PLAYER_X, PLAYER_Y);
 
     bn::sprite_ptr enemy = bn::sprite_items::enemy.create_sprite(ENEMY_X, ENEMY_Y);
 
-    bn::sprite_ptr treasure = bn::sprite_items::dot.create_sprite(0, 0);
+    bn::sprite_ptr treasure = bn::sprite_items::dot.create_sprite(-50, 0);
+
+    // checks if player intersects with orb
+    bool clash = false;
 
     while (true)
     {
@@ -106,7 +109,10 @@ int main()
 
         // Touching border resets game
         if (player.x() == MIN_X || player.x() == MAX_X || player.y() == MIN_Y || player.y() == MAX_Y)
-        {
+        {   
+            //plays death sound
+            bn::sound_items::death.play();
+
             score = 0;
             player.set_x(PLAYER_X);
             player.set_y(PLAYER_Y);
@@ -123,10 +129,16 @@ int main()
         }
         // Restart the game when pressed START
         if (bn::keypad::start_pressed())
-        {
+        {   
+            //plays select sound
+            bn::sound_items::select.play();
+
             score = 0;
             player.set_x(PLAYER_X);
             player.set_y(PLAYER_Y);
+
+            enemy.set_x(ENEMY_X);
+            enemy.set_y(ENEMY_Y);
 
             // Jump to any random point in the screen
             int new_x = rng.get_int(MIN_X, MAX_X);
@@ -140,13 +152,14 @@ int main()
         // BOOST
         if (bn::keypad::a_pressed() && speed_boost > 0)
         {
+            bn::sound_items::boost.play();
             speed_boost--;      // HOW MANY BOOST FOR GAME
-            boost_counter = 30; // HOW MANY FRAMES BEFORE BOOST ENDS
+            boost_length = 30; // HOW MANY FRAMES BEFORE BOOST ENDS
             BOOST = 2;
         }
-        if (boost_counter > 0)
+        if (boost_length > 0)
         {
-            boost_counter--;
+            boost_length--;
         }
         else
         {
@@ -188,6 +201,9 @@ int main()
         // ENEMY
         if (enemy_rect.intersects(player_rect))
         {
+            //plays death sound if enemy intersects
+            bn::sound_items::death.play();
+
             score = 0;
             player.set_x(PLAYER_X);
             player.set_y(PLAYER_Y);
@@ -211,8 +227,13 @@ int main()
             int new_y = rng.get_int(MIN_Y, MAX_Y);
             treasure.set_position(new_x, new_y);
 
+            clash = true;
             //plays a sound when overlaping with treasure
-            bn::sound_items::alert.play();
+            if(clash == true){
+                bn::sound_items::clash.play();
+                clash = false;
+            }
+            
             score++;
         }
 
