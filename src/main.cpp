@@ -18,9 +18,9 @@
 #include "common_fixed_8x16_font.h"
 #include "bn_sprite_items_enemy.h"
 
-// Pixels / Frame player moves at
-static constexpr bn::fixed SPEED = 2;
-static constexpr bn::fixed ENEMY_SPEED = 0.75;
+// Pixels / Frame player moves at (ORIGINALLY BOTH constexpr)
+static bn::fixed SPEED = 2;
+static bn::fixed ENEMY_SPEED = 0.75;
 
 // Width and height of the the player and treasure bounding boxes
 static constexpr bn::size PLAYER_SIZE = {8, 8};
@@ -76,8 +76,17 @@ int main()
     // checks if player intersects with orb
     bool clash = false;
 
+    //checks if the game is paused
+    bool paused = true;
+
     while (true)
     {
+        //Pauses the game
+        if(paused == true){
+            SPEED = 0;
+            ENEMY_SPEED = 0;
+        }
+
         // Move player with d-pad
         if (bn::keypad::left_held())
         {
@@ -125,6 +134,9 @@ int main()
 
             // Resets boosts
             boost_amt = 3;
+
+            //pauses the game
+            paused = true;
         }
         // Restart the game when pressed START
         if (bn::keypad::start_pressed())
@@ -146,6 +158,13 @@ int main()
 
             // resets boosts
             boost_amt = 3;
+
+            //resets player speed
+            SPEED = 2;
+            ENEMY_SPEED = 0.75;
+
+            //unpauses game
+            paused = false;
         }
 
         // BOOST
@@ -155,6 +174,9 @@ int main()
             boost_amt--;      // HOW MANY BOOST FOR GAME
             boost_length = 30; // HOW MANY FRAMES BEFORE BOOST ENDS
             BOOST_SPD = 2;
+        }
+        if (bn::keypad::a_pressed() && boost_amt <= 0){
+            bn::sound_items::boost_none.play(); //plays an "empty boost" sound
         }
         if (boost_length > 0)
         {
@@ -216,6 +238,9 @@ int main()
 
             // Resets boosts
             boost_amt = 3;
+
+            //pauses the game
+            paused = true;
         }
 
         // If the bounding boxes overlap, set the treasure to a new location an increase score
